@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.TroubleDao">
+    
+		<select id="getTroubleList" resultType="Trouble">
+			select * from trouble
+		</select>
+		
+		<select id="getTroubleById" resultType="Trouble" parameterType="int" >
+			select * from trouble
+			where id=#{id}
+		</select>
+		
+		<update id="updateTrouble" parameterType="Trouble">
+			update trouble set  study_console=#{study_console},
+			                              study_scene=#{study_scene},
+			                              test_console=#{test_console},
+			                              test_scene=#{test_scene},
+			                              exam_console=#{exam_console},
+			                              exam_scene=#{exam_scene}
+			where  id=#{id}
+		</update>
+		
+		<insert id="insertTrouble" parameterType="Trouble">
+			insert Trouble (name,study_console,study_scene,test_console,test_scene,exam_console,exam_scene)
+			values(#{name},#{study_console},#{study_scene},#{test_console},#{test_scene},#{exam_console},#{exam_scene})
+		</insert>
+		
+		<delete id="deleteTrouble" parameterType="map">
+			delete from trouble
+			where id in
+			<foreach collection="ids" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</delete>
+</mapper>

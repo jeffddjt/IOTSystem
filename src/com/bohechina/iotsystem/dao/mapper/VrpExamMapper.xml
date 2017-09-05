@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.VrpExamInfoDao">
+
+	<select id="GetVrpExamInfoList" resultType="VrpExamInfo">
+		select * from VrpExamInfo
+	</select>
+	
+	<select id="GetVrpExamInfoById" resultType="VrpExamInfo" parameterType="int" >
+		select * from VrpExamInfo where id=#{id}
+	</select>
+	
+</mapper>

@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+validator.Checked=WebRoot/assets/js,WebRoot/res,WebRoot/META-INF/context.xml,WebRoot/WEB-INF/pages,WebRoot/index.jsp
+validator.Unchecked=

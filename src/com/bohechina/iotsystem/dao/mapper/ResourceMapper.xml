@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.ResourceInfoDao">
+    
+    
+    <select id="getResourceInfoListBySubject" resultType="ResourceInfo" parameterType="String">
+    	select *
+    	 from ResourceInfo
+    	 where subject=#{subject}
+    </select>
+    
+    <select id="getResourceInfoById" resultType="ResourceInfo" parameterType="int">
+    	select *
+    	 from ResourceInfo 
+    	 where id=#{id}
+    </select>
+    
+    <insert id="addResourceInfo" parameterType="ResourceInfo">
+    	insert into ResourceInfo (subject,resName,resPinyin,resFun,resApp,resVrp,resImg,resNum)
+    	values (#{subject},#{resName},#{resPinyin},#{resFun},#{resApp},#{resVrp},#{resImg},#{resNum})
+    	
+    </insert>
+    
+    <delete id="deleteResourceInfo" parameterType="Map">
+    	delete from ResourceInfo
+    	where id in
+    	<foreach collection="ids" item="item" open="("  separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+    <update id="updateResourceInfo" parameterType="ResourceInfo">
+        	update  ResourceInfo set  subject=#{subject},resName=#{resName},resPinyin=#{resPinyin},
+        											 resFun=#{resFun},resApp=#{resApp},resVrp=#{resVrp},resImg=#{resImg},
+        											 resNum=#{resNum}
+        	where id=#{id}
+
+    
+    </update>
+    
+</mapper>

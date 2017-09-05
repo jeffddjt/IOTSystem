@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.TestDao">
+
+	<resultMap type="TestInfo" id="TestInfoMap">
+		<id property="id" column="id"/>
+		<result property="subject" column="subject"/>
+		<result property="category" column="category"/>
+		<result property="testName" column="testName"/>
+		<result property="singleQuestionCount" column="singleQuestionCount"/>
+		<result property="multipleQuestionCount" column="multipleQuestionCount"/>
+		<result property="whetherQuestionCount"  column="whetherQuestionCount"/>
+		<result property="vrpQuestionCount" column="vrpQuestionCount"/>
+		<result property="duration"	column="duration"/>
+		<result property="experience" column="experience"/>
+		<result property="exp" column="exp"/>
+		<result property="createTime" column="createTime"/>
+		<result property="lastUpdateTime" column="lastUpdateTime"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<select id="getTestInfoById" resultMap="TestInfoMap" parameterType="int">
+		select * from TestInfo
+		where id=#{id} 
+	</select>
+	
+	<select id="getTestInfoList" resultMap="TestInfoMap" parameterType="Map">
+		select * from TestInfo
+		where status=true
+			<if test="subject!=null">
+				and subject=#{subject}
+			</if>
+			<if test="category!=null">
+				and category=#{category}
+			</if>
+	</select>
+	
+
+	
+	<insert id="addTestInfo" parameterType="TestInfo">
+		insert into TestInfo(subject,category,testName,singleQuestionCount,multipleQuestionCount,whetherQuestionCount,
+		vrpQuestionCount,duration,experience,exp,createTime,lastUpdateTime)
+		values (#{subject},#{category},#{testName},#{singleQuestionCount},#{multipleQuestionCount},#{whetherQuestionCount},
+		#{vrpQuestionCount},#{duration},#{experience},#{exp},#{createTime},#{lastUpdateTime})
+	</insert>
+	
+	<update id="deleteTest" parameterType="Map">
+		update TestInfo set status=false
+		where id in
+		<foreach collection="ids" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	
+	<update id="updateTest" parameterType="TestInfo">
+			update TestInfo set testName=#{testName},
+											 singleQuestionCount=#{singleQuestionCount},
+			                                 multipleQuestionCount=#{multipleQuestionCount},
+			                                 whetherQuestionCount=#{whetherQuestionCount},
+		                                     vrpQuestionCount=#{vrpQuestionCount},
+		                                     duration=#{duration},
+		                                     experience=#{experience},
+		                                     exp=#{exp},
+		                                     lastUpdateTime=#{lastUpdateTime}
+		     where id=#{id}
+	</update>
+	
+</mapper>

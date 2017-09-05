@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.QuestionDao">
+
+	
+	<select id="getQuestionList" resultType="Question"  parameterType="String">
+		select * from question
+		where subject like concat(#{subject},'%')
+	</select>
+    
+    <select id="getQuestionById" resultType="Question" parameterType="int">
+    	select * from question
+    	where id=#{id}
+    </select>
+    
+    <insert id="insertQuestion" parameterType="Question">
+    	insert into question(subject,type,itemText,itemRes,choiceA1,choiceB1,choiceC1,choiceD1,answer1,choiceA2,choiceB2,choiceC2,choiceD2,answer2)
+    	values (#{subject},#{type},#{itemText},#{itemRes},#{choiceA1},#{choiceB1},#{choiceC1},#{choiceD1},#{answer1},#{choiceA2},#{choiceB2},#{choiceC2},
+    	#{choiceD2},#{answer2})
+    </insert>
+    
+    <update id="updateQuestion" parameterType="Question">
+    	update question set subject=#{subject},itemText=#{itemText},choiceA1=#{choiceA1},choiceB1=#{choiceB1},choiceC1=#{choiceC1},choiceD1=#{choiceD1},
+    	                                answer1=#{answer1},choiceA2=#{choiceA2},choiceB2=#{choiceB2},choiceC2=#{choiceC2},choiceD2=#{choiceD2},answer2=#{answer2}
+    	where id=#{id}
+    </update>
+
+    
+    <delete id="deleteQuestion" parameterType="map">
+    	delete from question 
+    	where id in 
+    	<foreach collection="ids" open="(" separator="," close=")" item="item">
+    		${item}
+    	</foreach>
+    </delete>
+	
+</mapper>

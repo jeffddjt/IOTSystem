@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.TeacherInfoDao">
+
+	<select id="getTeacherInfoList" resultType="TeacherInfo">
+		select * from TeacherInfo
+	</select>
+	
+	<select id="getTeacherInfoById" parameterType="int" resultType="TeacherInfo">
+		select * from TeacherInfo
+		where id=#{id}
+	</select>
+	
+	<select id="getTeacherInfoCount" resultType="int" parameterType="TeacherInfo">
+		select count(*) from TeacherInfo
+		where account=#{account} 
+		<if test="id!=0">
+			and id&lt;&gt;#{id}
+		</if>
+	</select>
+	
+	<select id="verify" resultType="TeacherInfo" parameterType="LoginUser">
+		select * from TeacherInfo
+		where account=#{account} and password=#{password}
+	</select>
+	
+	<insert id="addTeacherInfo" parameterType="TeacherInfo">
+		insert into TeacherInfo(account,userName,password)
+		values (#{account},#{userName},#{password})
+	</insert>
+	
+	<update id="updateTeacherInfo" parameterType="TeacherInfo">
+		update TeacherInfo set account=#{account},userName=#{userName},password=#{password}
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteTeacherInfo" parameterType="Map">
+		delete from TeacherInfo 
+		where id in
+		<foreach collection="ids" item="item" open="(" separator="," close=")">
+				#{item}
+		</foreach>
+	</delete>
+</mapper>

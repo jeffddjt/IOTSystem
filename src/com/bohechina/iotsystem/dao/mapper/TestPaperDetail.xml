@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.TestPaperDetailDao">
+
+	<select id="getTestPaperDetailList" resultType="TestPaperDetail" parameterType="int">
+		select * from TestPaperDetail
+		where testPaperId=#{testPaperId}
+	</select>
+	
+	<select id="getCountByTestId" resultType="int" parameterType="int">
+		select count(*) from testPaperDetail
+		where testPaperId=#{id}
+	</select>
+	
+	<insert id="insertTestPaperDetail" parameterType="list">
+		insert into TestPaperDetail(testPaperID,questionNo,questionSubject,questionCategory,questionID,answer)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.testPaperID},#{item.questionNo},#{item.questionSubject},#{item.questionCategory},#{item.questionID},#{item.answer})
+		</foreach>
+	</insert>
+	
+	<update id="updateTestPaperDetail" parameterType="Map">
+		update TestPaperDetail set stu_answer=#{stu_answer}
+		where testPaperId=#{id} and questionNo=#{questionNo}
+	</update>
+
+    <update id="updateTestScore" parameterType="list">
+    		update TestPaperDetail set score=#{score}
+    		where id=#{id}
+    </update>
+    
+</mapper>

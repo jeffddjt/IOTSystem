@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.ExamDao">
+
+
+	
+	<select id="getExamInfoById" resultType="ExamInfo" parameterType="int">
+		select * from ExamInfo
+		where id=#{id} 
+	</select>
+	
+	<select id="getExamInfoList" resultType="ExamInfo"  parameterType="Map">
+		select * from ExamInfo
+		where status=true 
+			<if test="subject!=null">
+				and subject=#{subject}
+			</if>
+			<if test="category!=null">
+				and category=#{category}
+			</if>
+	</select>
+	
+	<select id="getUnJoinedExam" resultType="ExamInfo" parameterType="map">
+		SELECT * FROM examinfo
+		WHERE id NOT IN (SELECT examid FROM exampaper WHERE stu_id=#{stu_id})
+		<if test="subject!='' and subject!=null">
+			and subject=#{subject} 
+		</if>
+		<if test="category!='' and category!=null">
+			and category=#{category}
+		</if>
+	</select>
+	
+	
+	
+	<insert id="addExamInfo" parameterType="ExamInfo">
+		insert into ExamInfo(subject,category,examName,qty,duration,score,experience,exp,createTime,lastUpdateTime)
+		values (#{subject},#{category},#{examName},#{qty},#{duration},#{score},#{experience},#{exp},#{createTime},#{lastUpdateTime})
+	</insert>
+	
+	<delete id="deleteExam" parameterType="Map">
+		delete from ExamInfo
+		where id in
+		<foreach collection="ids" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="updateExam" parameterType="ExamInfo">
+			update ExamInfo set examName=#{examName},
+											 qty=#{qty},
+		                                     duration=#{duration},
+		                                     score=#{score},
+		                                     experience=#{experience},
+		                                     exp=#{exp},
+		                                     lastUpdateTime=#{lastUpdateTime}
+		     where id=#{id}
+	</update>
+	
+</mapper>

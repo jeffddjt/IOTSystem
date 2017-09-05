@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.ResourceCategoryDao">
+
+    <resultMap type="ResourceCategory" id="ResourceCategoryMap">
+    	<id property="id" column="id"/>
+    	<result property="subject" column="subject"/>
+    	<result property="category" column="category"/>
+    </resultMap>
+    
+    <select id="getResourceCategory" resultMap="ResourceCategoryMap" parameterType="String">
+    	select * from ResourceCategory
+    	where subject=#{subject}
+    </select>
+    
+    <select id="getResourceCategoryById" resultMap="ResourceCategoryMap" parameterType="int">
+    	select * from ResourceCategory
+    	where id=#{id}
+    </select>
+</mapper>

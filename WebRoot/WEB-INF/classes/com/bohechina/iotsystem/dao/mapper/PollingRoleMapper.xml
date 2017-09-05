@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.PollingRoleDao">
+    
+     <select id="count" resultType="int">
+     	select count(*) from pollingRole
+     </select>
+     
+     <select id="getPollingRole" resultType="PollingRole">
+     	select * from pollingRole
+     </select>
+    
+     <update id="updatePollingRole" parameterType="PollingRole">
+     		update pollingRole set role1=#{role1},role2=#{role2}
+     </update>
+     
+     <insert id="insertPollingRole" parameterType="PollingRole">
+     	insert pollingRole(role1,role2)
+     	values (#{role1},#{role2})
+     </insert>
+     
+     
+     
+</mapper>

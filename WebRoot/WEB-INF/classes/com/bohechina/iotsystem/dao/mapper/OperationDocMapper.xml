@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.OperationDocDao">
+	
+	
+	<resultMap type="OperationDoc" id="OperationDocMap">
+		<id property="id" column="id"/>
+		<result property="fileName" column="fileName"/>
+		<result property="createTime" column="createTime"/>
+		<result property="lastUpdateTime" column="lastUpdateTime"/>
+	</resultMap>
+	
+	<select id="getOperationDoc" resultMap="OperationDocMap">
+		select * from operationDoc
+	</select>
+	
+	<select id="getCount" resultType="int">
+		select count(*) from operationDoc
+	</select>
+	
+	<insert id="addOperationDoc" parameterType="OperationDoc">
+		insert into operationdoc (filename,createTime,lastUpdateTime)
+		values (#{fileName},#{createTime},#{lastUpdateTime})
+	</insert>
+	
+	<update id="updateOperationDoc" parameterType="OperationDoc">
+		update operationdoc set fileName=#{fileName},lastUpdateTime=#{lastUpdateTime}
+		where id=#{id}
+	</update>
+</mapper>

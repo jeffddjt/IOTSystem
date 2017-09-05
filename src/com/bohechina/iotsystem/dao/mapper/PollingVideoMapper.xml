@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.PollingVideoDao">
+    
+	<select id="getPollingVideoList" resultType="PollingVideo" parameterType="int">
+		select * from pollingVideo
+		where type=#{type}
+	</select>
+     
+     <select id="getPollingVideoById" resultType="PollingVideo" parameterType="int">
+     	select * from pollingVideo
+     	where id=#{id}
+     </select>
+     
+     <select id="getPollingVideoByType" resultType="EnterpriseVideo" parameterType="int">
+     	select * from pollingVideo
+     	where type=#{type}
+     </select>
+     
+     <select id="getCount" parameterType="int" resultType="int">
+     	select count(*) from pollingVideo
+     	where type=#{type}
+     </select>
+     
+     <update id="updatePollingVideo" parameterType="PollingVideo">
+     		update pollingVideo set type=#{type}, name=#{name},path=#{path}
+     		where id=#{id}
+     </update>
+     
+     
+     <insert id="insertPollingVideo" parameterType="PollingVideo">
+     	insert pollingVideo(type,name,path)
+     	values(#{type},#{name},#{path})
+     </insert>
+     
+     <delete id="deletePollingVideo" parameterType="map">
+     	delete from pollingVideo
+     	where id in
+     	<foreach collection="ids" item="item" open="(" separator="," close=")">
+     		#{item}
+     	</foreach>
+     </delete>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.ExamPaperDetailDao">
+
+	<select id="getExamPaperDetailList" resultType="ExamPaperDetail" parameterType="int">
+		select * from ExamPaperDetail
+		where examPaperId=#{examPaperId}
+	</select>
+	
+	<select id="getCountByExamId" resultType="int" parameterType="int">
+		select count(*) from examPaperDetail
+		where examPaperId=#{id}
+	</select>
+	
+	<select id="getExamPaperDetail" resultType="ExamPaperDetail" parameterType="map">
+		select * from ExamPaperDetail
+		where examPaperId=#{examPaperId} and questionNo=#{questionNo}
+	</select>
+	
+	<insert id="insertExamPaperDetail" parameterType="list">
+		insert into ExamPaperDetail(examPaperID,questionNo,questionSubject,questionCategory,questionID,answer1,answer2,score)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.examPaperID},#{item.questionNo},#{item.questionSubject},#{item.questionCategory},#{item.questionID},#{item.answer1},#{item.answer2},#{item.score})
+		</foreach>
+	</insert>
+	
+	<update id="updateExamPaperDetail" parameterType="ExamPaperDetail">
+		update ExamPaperDetail set stu_answer1=#{stu_answer1},stu_answer2=#{stu_answer2},stu_score=#{stu_score}
+		where id=#{id}
+	</update>
+	
+	<update id="calculateScore" parameterType="int">
+		UPDATE exampaper a,(SELECT exampaperid, SUM(stu_score) stu_score FROM exampaperdetail GROUP BY exampaperid) b 
+		SET a.`stu_score`=b.stu_score
+		WHERE a.`id`=b.exampaperid and a.id=#{id}		
+	</update>
+
+    <update id="updateExamScore" parameterType="list">
+    		update ExamPaperDetail set stu_score=#{stu_score}
+    		where id=#{id}
+    </update>
+    
+    
+</mapper>

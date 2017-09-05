@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.StudentInfoDao">
+
+	<select id="getStudentInfoList" resultType="StudentInfo">
+		select * from Student
+		where stu_state=true
+	</select>
+	
+	<select id="getStudentInfoById" resultType="StudentInfo" parameterType="String">
+		select * from Student
+		where stu_id=#{stu_id}
+	</select>
+	
+	<select id="verify" resultType="StudentInfo" parameterType="LoginUser">
+		select * from Student
+		where stu_id=#{account} and stu_pwd=#{password}
+	</select>
+	
+	<insert id="addStudentInfo" parameterType="list">
+		insert into Student (stu_id,stu_name,stu_pwd)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.stu_id},#{item.stu_name},#{item.stu_pwd})
+		</foreach>
+	</insert>
+	
+	<update id="updateStudentInfo" parameterType="StudentInfo">     
+		update Student set Stu_name=#{stu_name},Stu_pwd=#{stu_pwd},Star_res=#{star_res},
+		Star_dem=#{star_dem},Star_mai=#{star_mai},Star_dea=#{star_dea},Star_ove=#{star_ove},                
+		Stu_grade=#{stu_grade},Stu_pic=#{stu_pic}   
+		where stu_id=#{stu_id}        
+	</update>
+	
+	<delete id="deleteStudentInfo" parameterType="Map">
+		delete from  Student
+		where stu_id in 
+		<foreach collection="ids"  item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

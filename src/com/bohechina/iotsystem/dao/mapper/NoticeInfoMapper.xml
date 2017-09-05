@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.NoticeInfoDao">
+	
+	<resultMap type="NoticeInfo" id="NoticeInfoMap">
+		<id property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="createtime"/>
+		<result property="lastUpdateTime" column="lastupdatetime"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+    <select id="getNoticeInfoAll" resultMap="NoticeInfoMap">
+    	select * from NoticeInfo
+    	where status=true
+    </select>
+    
+    <select id="getNoticeInfoById" resultMap="NoticeInfoMap" parameterType="int">
+    	select * from NoticeInfo 
+        where status=true and id=#{id}
+    </select>
+
+    <insert id="addNoticeInfo" parameterType="NoticeInfo">
+    	insert into NoticeInfo (title,content,createtime,lastupdatetime,status)
+    	values (#{title},#{content},#{createTime},#{lastUpdateTime},#{status})
+    </insert>
+    
+    <update id="deleteNoticeInfo" parameterType="map">
+    	update NoticeInfo set status=false 
+    	where id in
+    	<foreach collection="ids" item="item" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </update>
+	
+	<update id="updateNoticeInfo" parameterType="NoticeInfo">
+	      update NoticeInfo set title=#{title},content=#{content},lastupdatetime=#{lastUpdateTime}
+	      where id=#{id}
+	</update>
+</mapper>

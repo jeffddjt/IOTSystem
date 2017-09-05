@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.CorCultureDao">
+	
+		<resultMap type="CorCulture" id="CorCultureMap">
+		<id property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content" />
+		<result property="createTime" column="createTime"/>
+		<result property="lastUpdateTime" column="lastUpdateTime"/>
+	</resultMap>
+	
+	<select id="getCorCultureList" resultMap="CorCultureMap">
+		select * from CorCulture 
+	</select>
+	
+	<insert id="addCorCulture" parameterType="CorCulture">
+		insert into CorCulture(title,content,createTime,lastUpdateTime)
+		values (#{title},#{content},#{createTime},#{lastUpdateTime})
+	</insert>
+	
+	<update id="updateCorCulture" parameterType="CorCulture">
+		update CorCulture set title=#{title},content=#{content},lastUpdateTime=#{lastUpdateTime}
+		where id=#{id}
+	</update>
+	
+</mapper>

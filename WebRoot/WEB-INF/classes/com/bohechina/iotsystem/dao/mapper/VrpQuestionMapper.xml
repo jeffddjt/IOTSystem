@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bohechina.iotsystem.dao.VrpQuestionDao">
+
+	
+	<select id="GetVrpQuestionList" resultType="VrpQuestion"  parameterType="String">
+		select * from vrpquestion
+		where subject like concat(#{subject},'%')
+	</select>
+    
+    <select id="GetVrpQuestionById" resultType="VrpQuestion" parameterType="int">
+    	select * from vrpquestion
+    	where id=#{id}
+    </select>
+    
+    <insert id="AddVrpQuestion" parameterType="VrpQuestion">
+    	insert into vrpquestion(subject,type,itemText,itemRes,score)
+    	values (#{subject},#{type},#{itemText},#{itemRes},#{score})
+    </insert>
+    
+    <update id="UpdateVrpQuestion" parameterType="VrpQuestion">
+    	update vrpquestion set subject=#{subject},itemText=#{itemText},
+    	                                    type=#{type},itemRes=#{itemRes},score=#{score}
+    	where id=#{id}
+    </update>
+
+    
+    <delete id="DeleteVrpQuestion" parameterType="map">
+    	delete from vrpquestion 
+    	where id in 
+    	<foreach collection="ids" open="(" separator="," close=")" item="item">
+    		${item}
+    	</foreach>
+    </delete>
+	
+</mapper>
