@@ -9,7 +9,7 @@ public class Demo {
 	private String flow;
 	private String intro;
 	private String vrp;
-	
+	private int k;
 	
 	public int getId() {
 		return id;
